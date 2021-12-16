@@ -17,7 +17,7 @@ class ECGDataset(Dataset):
 
     def __getitem__(self, idx):
         signal = self.df.loc[idx, self.data_columns].astype('float32')
-        signal = torch.FloatTensor([signal.values])                 
+        signal = torch.FloatTensor(np.array([signal.values]))
         target = torch.LongTensor(np.array(self.df.loc[idx, 'class']))
         return signal, target
 
