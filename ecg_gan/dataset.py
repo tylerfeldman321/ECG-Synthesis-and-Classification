@@ -1,11 +1,12 @@
 import numpy as np
+import pandas as pd
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 
-from .config import config
+from config import Config
 
 
 class ECGDataset(Dataset):
@@ -23,15 +24,16 @@ class ECGDataset(Dataset):
     def __len__(self):
         return len(self.df)
 
+
 def get_dataloader(label_name, batch_size):
-    df = pd.read_csv(config.csv_path)
+    df = pd.read_csv(Config.csv_path)
     df = df.loc[df['label'] == label_name]
     df.reset_index(drop=True, inplace=True)
     dataset = ECGDataset(df)
     dataloader = DataLoader(dataset=dataset, batch_size=batch_size, num_workers=0)
     return dataloader
-  
+
+
 if __name__ == '__main__':
     config = Config()
-    dataloader = get_dataloader('Fusion of ventricular and normal', 96)
-    
+    dataloader = get_dataloader('Normal', 96)

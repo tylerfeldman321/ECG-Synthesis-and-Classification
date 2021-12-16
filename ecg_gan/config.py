@@ -3,9 +3,10 @@ import torch
 
 
 class Config:
-    csv_path = ''
+    csv_path = 'data.csv'
     seed = 2021
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+
 
 def seed_everything(seed: int):
     np.random.seed(seed)
