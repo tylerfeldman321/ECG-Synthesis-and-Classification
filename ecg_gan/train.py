@@ -99,9 +99,9 @@ class Trainer:
 
     def run(self, checkpoint_steps=300):
         now = datetime.now()
-        results_dir = 'results-' + now.strftime("%m-%d-%H-%M")
+        results_dir = os.path.join('results', now.strftime("%m-%d-%H-%M"))
         if not os.path.exists(results_dir):
-            os.mkdir(results_dir)
+            os.makedirs(results_dir)
         for epoch in range(self.num_epochs):
             errD_, errG_ = self._one_epoch()
             self.d_errors.append(errD_)
