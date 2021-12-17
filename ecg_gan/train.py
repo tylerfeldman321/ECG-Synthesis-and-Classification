@@ -99,7 +99,7 @@ class Trainer:
 
     def run(self, checkpoint_steps=300):
         now = datetime.now()
-        results_dir = os.path.join('results', now.strftime("%m-%d-%H-%M"))
+        results_dir = os.path.join('results', now.strftime("Month%m-Day%d-Hour%H-Minute%M"))
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
         for epoch in range(self.num_epochs):
@@ -140,4 +140,4 @@ if __name__ == '__main__':
         num_epochs=3000,
         label='Normal'
     )
-    trainer.run()
+    trainer.run(checkpoint_steps=5)
