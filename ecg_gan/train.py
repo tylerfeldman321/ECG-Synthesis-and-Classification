@@ -124,6 +124,9 @@ class Trainer:
                               'g': np.asarray(self.g_errors)}
                     pickle.dump(errors, f)
 
+            torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator-epoch-{epoch}.pth"))
+            torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator-epoch-{epoch}.pth"))
+
         torch.save(self.netG.state_dict(), f"generator.pth")
         torch.save(self.netG.state_dict(), f"discriminator.pth")
 
@@ -140,4 +143,4 @@ if __name__ == '__main__':
         num_epochs=3000,
         label='Normal'
     )
-    trainer.run(checkpoint_steps=5)
+    trainer.run(checkpoint_steps=50)
