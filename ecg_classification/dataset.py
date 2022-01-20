@@ -5,7 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 
 from sklearn.model_selection import train_test_split
 
-from .config import Config
+from config import Config
 
 
 class ECGDataset(Dataset):
