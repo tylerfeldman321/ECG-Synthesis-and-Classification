@@ -33,6 +33,7 @@ class DataGenerator:
         noise = torch.randn(num_data_points, 1, 187, device=self.device)
         fake = self.netG(noise)
         generated_data = fake.detach().cpu().squeeze(1).numpy()[:].transpose()
+        return generated_data
 
 
 if __name__ == '__main__':
