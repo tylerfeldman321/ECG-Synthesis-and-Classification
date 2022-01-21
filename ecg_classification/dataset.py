@@ -35,11 +35,17 @@ def get_dataloader(phase: str, batch_size: int = 96) -> DataLoader:
         data generator
     '''
     df = pd.read_csv(Config.train_csv_path)
+    test_df = pd.read_csv(Config.test_csv_path)
     train_df, val_df = train_test_split(
         df, test_size=0.15, random_state=Config.seed, stratify=df['label']
     )
-    train_df, val_df = train_df.reset_index(drop=True), val_df.reset_index(drop=True)
-    df = train_df if phase == 'train' else val_df
+    train_df, val_df, test_df = train_df.reset_index(drop=True), val_df.reset_index(drop=True), test_df.reset_index(drop=True)
+    if phase == 'train':
+        df = train_df
+    elif phase == 'val':
+        df = val_df
+    elif phase == 'test':
+        df = test_df
     dataset = ECGDataset(df)
     dataloader = DataLoader(dataset=dataset, batch_size=batch_size, num_workers=2)
     return dataloader
@@ -48,3 +54,4 @@ def get_dataloader(phase: str, batch_size: int = 96) -> DataLoader:
 if __name__ == '__main__':
     train_dataloader = get_dataloader(phase='train', batch_size=96)
     val_dataloader = get_dataloader(phase='val', batch_size=96)
+    test_dataloader = get_dataloader(phase='test', batch_size=96)

@@ -29,7 +29,9 @@ class Trainer:
         self.optimizer = AdamW(self.net.parameters(), lr=lr)
         self.scheduler = CosineAnnealingLR(self.optimizer, T_max=num_epochs, eta_min=5e-6)
         self.best_loss = float('inf')
-        self.phases = ['train', 'val']
+        self.best_epoch = 0
+        self.best_model_path = ''
+        self.phases = ['train', 'val', 'test']
         self.dataloaders = {
             phase: get_dataloader(phase, batch_size) for phase in self.phases
         }
@@ -90,10 +92,18 @@ class Trainer:
 
             if val_loss < self.best_loss:
                 self.best_loss = val_loss
-                print('\nNew checkpoint\n')
+                print('New checkpoint')
                 self.best_loss = val_loss
-                torch.save(self.net.state_dict(), f"best_model_epoch-{epoch}.pth")
+                self.best_epoch = epoch
+                self.best_model_path = os.path.join(run_results_dir, f"best_model_epoch-{epoch}.pth")
+                torch.save(self.net.state_dict(), self.best_model_path)
             write_logs()
+
+    def test(self, model_state_dict_path=None):
+        if not model_state_dict_path:
+            model_state_dict_path = self.best_model_path
+        self.net.load_state_dict(torch.load(model_state_dict_path))
+        self._train_epoch(self.best_epoch, 'test')
 
 
 def write_logs(csv_name='cnn.csv'):
@@ -133,4 +143,4 @@ if __name__ == '__main__':
     # start train
     trainer = Trainer(net=model, lr=1e-3, batch_size=96, num_epochs=30)
     trainer.run()
-    write_logs()
+    trainer.test()
