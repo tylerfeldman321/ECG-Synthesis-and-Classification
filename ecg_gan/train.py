@@ -137,7 +137,7 @@ if __name__ == '__main__':
         generator=g,
         discriminator=d,
         batch_size=96,
-        num_epochs=500,
+        num_epochs=501,
         label='Normal'
     )
     trainer.run(checkpoint_steps=50)
