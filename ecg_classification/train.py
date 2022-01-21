@@ -22,7 +22,7 @@ from config import Config, seed_everything
 
 class Trainer:
     def __init__(self, net, lr, batch_size, num_epochs):
-        self.net = net.to(config.device)
+        self.net = net.to(Config.device)
         self.num_epochs = num_epochs
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = AdamW(self.net.parameters(), lr=lr)
@@ -43,8 +43,8 @@ class Trainer:
         meter.init_metrics()
         
         for i, (data, target) in enumerate(self.dataloaders[phase]):
-            data = data.to(config.device)
-            target = target.to(config.device)
+            data = data.to(Config.device)
+            target = target.to(Config.device)
             
             output = self.net(data)
             loss = self.criterion(output, target)
