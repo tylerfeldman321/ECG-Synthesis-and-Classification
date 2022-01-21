@@ -124,8 +124,8 @@ class Trainer:
                               'g': np.asarray(self.g_errors)}
                     pickle.dump(errors, f)
 
-            torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator-epoch-{epoch}.pth"))
-            torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator-epoch-{epoch}.pth"))
+                torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator-epoch-{epoch}.pth"))
+                torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator-epoch-{epoch}.pth"))
 
         torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator.pth"))
         torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator.pth"))
