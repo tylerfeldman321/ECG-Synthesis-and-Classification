@@ -124,9 +124,6 @@ class Trainer:
                               'g': np.asarray(self.g_errors)}
                     pickle.dump(errors, f)
 
-                torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator-epoch-{epoch}.pth"))
-                torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator-epoch-{epoch}.pth"))
-
         torch.save(self.netG.state_dict(), os.path.join(results_dir, f"generator.pth"))
         torch.save(self.netG.state_dict(), os.path.join(results_dir, f"discriminator.pth"))
 
@@ -140,7 +137,7 @@ if __name__ == '__main__':
         generator=g,
         discriminator=d,
         batch_size=96,
-        num_epochs=3000,
+        num_epochs=500,
         label='Normal'
     )
     trainer.run(checkpoint_steps=50)
