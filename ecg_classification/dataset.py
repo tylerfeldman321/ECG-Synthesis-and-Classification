@@ -34,9 +34,9 @@ def get_dataloader(phase: str, batch_size: int = 96) -> DataLoader:
     Returns:
         data generator
     '''
-    df = pd.read_csv(config.train_csv_path)
+    df = pd.read_csv(Config.train_csv_path)
     train_df, val_df = train_test_split(
-        df, test_size=0.15, random_state=config.seed, stratify=df['label']
+        df, test_size=0.15, random_state=Config.seed, stratify=df['label']
     )
     train_df, val_df = train_df.reset_index(drop=True), val_df.reset_index(drop=True)
     df = train_df if phase == 'train' else val_df
